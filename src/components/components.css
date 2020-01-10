@@ -1,0 +1,7 @@
+.marginP p{
+    margin: 0 0 0 1%;
+}
+
+button:disabled{
+    cursor: not-allowed;
+}
