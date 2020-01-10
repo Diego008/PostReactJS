@@ -17,15 +17,16 @@ export default class Post extends React.Component {
         this.removePost = this.removePost.bind(this);
     }
 
+    //evento formulário que é disparado ao clicar no botão POST
     handleSubmit(e) {
         e.preventDefault();
 
+        //declarando constates para receber os valores do formulário
         const email = this.inputEmail.value;
         const post = this.inputValue.value;
-        const data = new Date().toLocaleString();
+        const data = new Date().toLocaleString();              
 
-        // this.setState({ newData: new Date().toLocaleString() } );       
-
+        //populando state
         if (email.trim() !== '' && post.trim() !== '') {
             this.setState({
                 comments: [
@@ -45,16 +46,18 @@ export default class Post extends React.Component {
         this.inputEmail.value = '';
     }
 
+    //Evento disparado ao clicar para excluir POST
     removePost({currentTarget}) {               
-        var array = [...this.state.comments]; // make a separate copy of the array        
-        var index = currentTarget.id;        
+        var array = [...this.state.comments]; // declarando array para receber toda state       
+        var index = currentTarget.id;        //declarando variável para receber id do botão de exclusão do post
 
         if (index !== 0) {
             array.splice(index, 1);
-            this.setState({ comments: array });
+            this.setState({ comments: array }); // Recriando state com novo array
         }        
     }
 
+    //exemplo de onchange INPUT para pegar o value
     // handleTextChange(e) {
     //     e.preventDefault();
 
@@ -62,9 +65,10 @@ export default class Post extends React.Component {
     // }
 
     render() {
+        //declarando constante para pegar tamanho do array para realizar a contagem
         const numPosts = this.state.comments.length - 1;
         let paragraph;
-
+        //Validando se existe post ou não, caso false, retorna um paragrafo Sem Posts.
         if (numPosts === 0) {
             paragraph = <p>Sem Posts.</p>
         }
@@ -91,6 +95,7 @@ export default class Post extends React.Component {
                 <div className="row">
                     <div className="col-sm-12 marginP">
                         {
+                            //mapeando array para trazer o conteúdo apenas quando tiver
                             this.state.comments.map((comment, index) => {
                                 if (index !== 0) {
                                     return <Comment key={index} id={index} email={comment.email} text={comment.text} data={comment.data} remove={this.removePost} />
